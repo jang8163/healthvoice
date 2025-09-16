@@ -5,6 +5,12 @@
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
   <img src="https://img.shields.io/badge/PWA-Ready-purple.svg" alt="PWA">
   <img src="https://img.shields.io/badge/Voice-Enabled-red.svg" alt="Voice">
+  <img src="https://img.shields.io/badge/Deployed-Vercel-black.svg" alt="Deployed">
+</div>
+
+<div align="center">
+  <h3>🚀 <a href="https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app" target="_blank">지금 바로 사용해보기</a> 🚀</h3>
+  <p><strong>모바일에서도 완벽하게 작동하는 PWA 앱</strong></p>
 </div>
 
 ## �� 소개
@@ -53,7 +59,7 @@
 ### 설치 및 실행
 ```bash
 # 1. 프로젝트 다운로드
-git clone https://github.com/username/healthvoice.git
+git clone https://github.com/jang8163/healthvoice.git
 cd healthvoice
 
 # 2. 브라우저에서 바로 실행
@@ -66,7 +72,7 @@ npm start
 ```
 
 ### �� PWA 설치
-1. 모바일 브라우저에서 웹사이트 접속
+1. 모바일 브라우저에서 [HealthVoice 사이트](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app) 접속
 2. "홈 화면에 추가" 또는 "앱 설치" 선택
 3. 네이티브 앱처럼 사용 가능
 
@@ -162,6 +168,15 @@ npm start
 
 ---
 
+## 🌐 라이브 데모
+
+**🚀 [지금 바로 사용해보기](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app)**
+
+- ✅ **완전히 작동하는 PWA 앱**
+- ✅ **모바일 최적화**
+- ✅ **음성 인식 기능**
+- ✅ **오프라인 지원**
+
 ## ✅ 요약
 
 HealthVoice는 단순한 복약 알림을 넘어, **물·수면·혈압 관리, 마음 케어, 운동 안내**까지 제공하는 **올인원 음성 기반 건강 관리 도우미**입니다.
@@ -175,7 +190,7 @@ HealthVoice는 단순한 복약 알림을 넘어, **물·수면·혈압 관리, 
 프로젝트에 대한 질문이나 제안사항이 있으시면 언제든 연락해 주세요!
 
 - 이메일: healthvoice@example.com
-- 이슈: [GitHub Issues](https://github.com/username/healthvoice/issues)
+- 이슈: [GitHub Issues](https://github.com/jang8163/healthvoice/issues)
 
 ---
 
