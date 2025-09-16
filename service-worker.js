@@ -2,6 +2,7 @@
 // PWA 기능 및 오프라인 지원을 위한 서비스 워커
 
 const CACHE_NAME = 'healthvoice-v1.0.0';
+const STATIC_CACHE_NAME = 'healthvoice-static-v1';
 const urlsToCache = [
     '/',
     '/index.html',
