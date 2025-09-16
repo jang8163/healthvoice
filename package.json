@@ -1,0 +1,57 @@
+{
+  "name": "healthvoice",
+  "version": "1.0.0",
+  "description": "음성 기반 건강 & 웰빙 도우미 - 복약 알림, 건강 루틴 관리, 정서 케어, 운동 가이드를 제공하는 PWA",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 8080 -c-1",
+    "build": "echo 'No build step required for this project'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linter configured'",
+    "serve": "npx live-server --port=8080 --host=localhost --no-browser",
+    "deploy": "echo 'Configure your deployment platform'"
+  },
+  "keywords": [
+    "health",
+    "wellness",
+    "medication",
+    "voice-recognition",
+    "pwa",
+    "healthcare",
+    "fitness",
+    "mental-health",
+    "korean"
+  ],
+  "author": "HealthVoice Team",
+  "license": "MIT",
+  "homepage": "https://github.com/username/healthvoice",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/healthvoice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/healthvoice/issues"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "pwa": {
+    "name": "HealthVoice",
+    "short_name": "HealthVoice",
+    "theme_color": "#667eea",
+    "background_color": "#667eea",
+    "start_url": "/",
+    "display": "standalone"
+  }
+}

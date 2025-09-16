@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthVoice - 음성 기반 건강 & 웰빙 도우미</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="HealthVoice">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>HealthVoice</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>대시보드</span>
+                </button>
+                <button class="nav-btn" data-section="medication">
+                    <i class="fas fa-pills"></i>
+                    <span>복약관리</span>
+                </button>
+                <button class="nav-btn" data-section="health">
+                    <i class="fas fa-chart-line"></i>
+                    <span>건강기록</span>
+                </button>
+                <button class="nav-btn" data-section="mental">
+                    <i class="fas fa-brain"></i>
+                    <span>마음케어</span>
+                </button>
+                <button class="nav-btn" data-section="exercise">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>운동코치</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main">
+        <!-- 대시보드 섹션 -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <div class="welcome-card">
+                    <h1>안녕하세요! 건강한 하루를 시작해볼까요?</h1>
+                    <p class="current-time"></p>
+                    <button class="voice-btn" id="mainVoiceBtn">
+                        <i class="fas fa-microphone"></i>
+                        <span>음성으로 말해보세요</span>
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- 1행 1열: 오늘의 복약 현황 -->
+                    <div class="card medication-status">
+                        <div class="card-header">
+                            <h3><i class="fas fa-pills"></i> 오늘의 복약 현황</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="medication-progress">
+                                <div class="progress-circle">
+                                    <svg class="progress-ring" width="80" height="80">
+                                        <circle class="progress-ring-circle" cx="40" cy="40" r="30"></circle>
+                                    </svg>
+                                    <div class="progress-text">
+                                        <span class="taken">0</span>/<span class="total">0</span>
+                                    </div>
+                                </div>
+                                <div class="progress-info">
+                                    <p class="next-medication">다음 복약: --:--</p>
+                                    <div class="medication-list" id="todayMedications"></div>
+                                    <div class="medication-actions">
+                                        <button class="btn btn-success medication-taken-btn" id="markTakenBtn" style="display: none;">
+                                            <i class="fas fa-check"></i> 먹었어요
+                                        </button>
+                                        <button class="btn btn-secondary" id="voiceCommandBtn">
+                                            <i class="fas fa-microphone"></i> 음성 명령
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1행 2열: 건강 루틴 -->
+                    <div class="card health-summary">
+                        <div class="card-header">
+                            <h3><i class="fas fa-heart"></i> 건강 루틴</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="health-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-tint"></i>
+                                    <span class="stat-label">물</span>
+                                    <span class="stat-value" id="waterCount">0/8잔</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-bed"></i>
+                                    <span class="stat-label">수면</span>
+                                    <span class="stat-value" id="sleepHours">-시간</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-heartbeat"></i>
+                                    <span class="stat-label">혈압</span>
+                                    <span class="stat-value" id="bloodPressure">-/-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2행 1열: 오늘의 기분 -->
+                    <div class="card mood-check">
+                        <div class="card-header">
+                            <h3><i class="fas fa-smile"></i> 오늘의 기분</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mood-display" id="todayMood">
+                                <div class="mood-emoji">😊</div>
+                                <p>기분을 알려주세요!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2행 2열: 오늘의 활동 -->
+                    <div class="card exercise-status">
+                        <div class="card-header">
+                            <h3><i class="fas fa-running"></i> 오늘의 활동</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="exercise-summary" id="exerciseSummary">
+                                <p>아직 운동을 시작하지 않았습니다.</p>
+                                <button class="btn btn-primary" onclick="startQuickExercise()">
+                                    <i class="fas fa-play"></i> 빠른 운동 시작
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 복약 관리 섹션 -->
+        <section id="medication" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-pills"></i> 복약 관리</h2>
+                    <button class="btn btn-primary" id="addMedicationBtn">
+                        <i class="fas fa-plus"></i> 약물 추가
+                    </button>
+                </div>
+
+                <div class="medication-container">
+                    <div class="medication-list-container">
+                        <h3>등록된 약물</h3>
+                        <div class="medication-items" id="medicationList"></div>
+                    </div>
+
+                    <div class="medication-schedule">
+                        <h3>오늘의 복약 일정</h3>
+                        <div class="schedule-timeline" id="medicationSchedule"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 건강 기록 섹션 -->
+        <section id="health" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> 건강 기록</h2>
+                </div>
+
+                <div class="health-tabs">
+                    <button class="tab-btn active" data-tab="water">물 마시기</button>
+                    <button class="tab-btn" data-tab="sleep">수면 기록</button>
+                    <button class="tab-btn" data-tab="vitals">혈압/혈당</button>
+                </div>
+
+                <div class="health-content">
+                    <!-- 물 마시기 탭 -->
+                    <div id="water-tab" class="tab-content active">
+                        <div class="water-tracker">
+                            <div class="water-goal">
+                                <h3>오늘의 수분 섭취</h3>
+                                <div class="water-visual">
+                                    <div class="water-bottle">
+                                        <div class="water-level" id="waterLevel"></div>
+                                        <span class="water-amount" id="waterAmount">0ml / 2000ml</span>
+                                    </div>
+                                    <button class="btn btn-primary" id="drinkWaterBtn">
+                                        <i class="fas fa-tint"></i> 물 마셨어요
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 수면 기록 탭 -->
+                    <div id="sleep-tab" class="tab-content">
+                        <div class="sleep-tracker">
+                            <h3>수면 기록</h3>
+                            <div class="sleep-input">
+                                <label for="sleepTime">수면 시간:</label>
+                                <input type="number" id="sleepTime" min="0" max="24" step="0.5" placeholder="7.5">
+                                <span>시간</span>
+                                <button class="btn btn-primary" id="recordSleepBtn">기록하기</button>
+                            </div>
+                            <div class="sleep-chart" id="sleepChart"></div>
+                        </div>
+                    </div>
+
+                    <!-- 혈압/혈당 탭 -->
+                    <div id="vitals-tab" class="tab-content">
+                        <div class="vitals-tracker">
+                            <h3>혈압/혈당 기록</h3>
+                            <div class="vitals-input">
+                                <div class="input-group">
+                                    <label>혈압:</label>
+                                    <input type="number" id="systolic" placeholder="120">
+                                    <span>/</span>
+                                    <input type="number" id="diastolic" placeholder="80">
+                                    <button class="btn btn-secondary" id="recordBPBtn">기록</button>
+                                </div>
+                                <div class="input-group">
+                                    <label>혈당:</label>
+                                    <input type="number" id="bloodSugar" placeholder="100">
+                                    <span>mg/dL</span>
+                                    <button class="btn btn-secondary" id="recordBSBtn">기록</button>
+                                </div>
+                            </div>
+                            <div class="vitals-history" id="vitalsHistory"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 마음 케어 섹션 -->
+        <section id="mental" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-brain"></i> 마음 케어</h2>
+                </div>
+
+                <div class="mental-care-grid">
+                    <div class="card mood-journal">
+                        <div class="card-header">
+                            <h3>기분 일기</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mood-selector">
+                                <div class="mood-options">
+                                    <button class="mood-option" data-mood="very-happy">😄</button>
+                                    <button class="mood-option" data-mood="happy">😊</button>
+                                    <button class="mood-option" data-mood="neutral">😐</button>
+                                    <button class="mood-option" data-mood="sad">😔</button>
+                                    <button class="mood-option" data-mood="angry">😠</button>
+                                </div>
+                                <textarea id="moodNote" placeholder="오늘 하루는 어떠셨나요?"></textarea>
+                                <button class="btn btn-primary" id="saveMoodBtn">기분 저장</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card meditation">
+                        <div class="card-header">
+                            <h3>명상 & 호흡</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="meditation-options">
+                                <button class="meditation-btn" data-duration="3">
+                                    <i class="fas fa-leaf"></i>
+                                    <span>3분 호흡법</span>
+                                </button>
+                                <button class="meditation-btn" data-duration="5">
+                                    <i class="fas fa-spa"></i>
+                                    <span>5분 명상</span>
+                                </button>
+                                <button class="meditation-btn" data-duration="10">
+                                    <i class="fas fa-om"></i>
+                                    <span>10분 깊은 명상</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="meditation-session" id="meditationSession" style="display: none;">
+                    <div class="meditation-timer">
+                        <div class="timer-display" id="timerDisplay">05:00</div>
+                        <div class="breathing-guide" id="breathingGuide">
+                            <div class="breathing-circle"></div>
+                            <p class="breathing-text">준비하세요...</p>
+                        </div>
+                        <div class="meditation-controls">
+                            <button class="btn btn-secondary" id="pauseMeditationBtn">일시정지</button>
+                            <button class="btn btn-danger" id="stopMeditationBtn">종료</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 운동 코치 섹션 -->
+        <section id="exercise" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-dumbbell"></i> 운동 코치</h2>
+                </div>
+
+                <div class="exercise-categories">
+                    <div class="category-card" data-category="stretch">
+                        <i class="fas fa-hand-paper"></i>
+                        <h3>스트레칭</h3>
+                        <p>목, 어깨, 허리를 풀어주는 간단한 스트레칭</p>
+                        <button class="btn btn-primary">시작하기</button>
+                    </div>
+                    <div class="category-card" data-category="cardio">
+                        <i class="fas fa-running"></i>
+                        <h3>유산소</h3>
+                        <p>제자리 걷기, 점프 등 가벼운 유산소 운동</p>
+                        <button class="btn btn-primary">시작하기</button>
+                    </div>
+                    <div class="category-card" data-category="strength">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>근력 운동</h3>
+                        <p>스쿼트, 팔굽혀펴기 등 기본 근력 운동</p>
+                        <button class="btn btn-primary">시작하기</button>
+                    </div>
+                </div>
+
+                <div class="exercise-session" id="exerciseSession" style="display: none;">
+                    <div class="exercise-info">
+                        <h3 id="exerciseName">운동 이름</h3>
+                        <p id="exerciseDescription">운동 설명</p>
+                        <div class="exercise-timer">
+                            <div class="timer" id="exerciseTimer">00:30</div>
+                            <div class="rep-counter" id="repCounter">0 회</div>
+                        </div>
+                    </div>
+                    <div class="exercise-controls">
+                        <button class="btn btn-success" id="startExerciseBtn">시작</button>
+                        <button class="btn btn-warning" id="pauseExerciseBtn">일시정지</button>
+                        <button class="btn btn-danger" id="stopExerciseBtn">종료</button>
+                        <button class="btn btn-secondary" id="nextExerciseBtn">다음</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 플로팅 버튼 -->
+    <div class="floating-buttons">
+        <button class="floating-btn voice-trigger" id="floatingVoiceBtn" title="음성 명령">
+            <i class="fas fa-microphone"></i>
+        </button>
+        <button class="floating-btn emergency" id="emergencyBtn" title="응급 상황">
+            <i class="fas fa-exclamation-triangle"></i>
+        </button>
+    </div>
+
+    <!-- 음성 인식 모달 -->
+    <div class="modal" id="voiceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>음성 명령 듣는 중...</h3>
+                <button class="close-btn" id="closeVoiceModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="voice-visual">
+                    <div class="voice-wave"></div>
+                    <div class="voice-wave"></div>
+                    <div class="voice-wave"></div>
+                </div>
+                <p class="voice-text" id="voiceText">말씀해 주세요...</p>
+                <div class="voice-suggestions">
+                    <span class="suggestion">"약 먹었어요"</span>
+                    <span class="suggestion">"물 마셨어요"</span>
+                    <span class="suggestion">"운동 시작"</span>
+                    <span class="suggestion">"기분 좋아요"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 약물 추가 모달 -->
+    <div class="modal" id="medicationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>약물 추가</h3>
+                <button class="close-btn" id="closeMedicationModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="medicationForm">
+                    <div class="form-group">
+                        <label for="medicationName">약물 이름:</label>
+                        <input type="text" id="medicationName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicationDosage">복용량:</label>
+                        <input type="text" id="medicationDosage" placeholder="예: 1정, 5ml">
+                    </div>
+                    <div class="form-group">
+                        <label for="medicationFrequency">복용 횟수:</label>
+                        <select id="medicationFrequency" required>
+                            <option value="1">하루 1회</option>
+                            <option value="2">하루 2회</option>
+                            <option value="3">하루 3회</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicationTimes">복용 시간:</label>
+                        <div id="medicationTimes"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">추가</button>
+                        <button type="button" class="btn btn-secondary" id="cancelMedicationBtn">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 알림 토스트 -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="demo-data.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        // Service Worker 등록
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker 등록 성공:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker 등록 실패:', error);
+                    });
+            });
+        }
+
+        // PWA 설치 프롬프트
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // 설치 버튼 표시
+            const installBtn = document.createElement('button');
+            installBtn.textContent = '📱 앱 설치';
+            installBtn.className = 'btn btn-primary install-btn';
+            installBtn.style.position = 'fixed';
+            installBtn.style.bottom = '20px';
+            installBtn.style.left = '20px';
+            installBtn.style.zIndex = '1000';
+            
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('PWA 설치 선택:', outcome);
+                    deferredPrompt = null;
+                    installBtn.remove();
+                }
+            });
+            
+            document.body.appendChild(installBtn);
+        });
+
+        // 앱 설치 완료시
+        window.addEventListener('appinstalled', () => {
+            console.log('HealthVoice 앱이 설치되었습니다!');
+            const installBtn = document.querySelector('.install-btn');
+            if (installBtn) {
+                installBtn.remove();
+            }
+        });
+    </script>
+</body>
+</html>
