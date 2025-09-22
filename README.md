@@ -10,7 +10,7 @@
 
 <div align="center">
   <h3>🚀 <a href="https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app" target="_blank">사이트 바로가기</a> 🚀</h3>
-  <p><strong>모바일에서도 완벽하게 작동하는 PWA 앱</strong></p>
+
 </div>
 
 ## �� 소개
