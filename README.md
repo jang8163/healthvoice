@@ -9,8 +9,10 @@
 </div>
 
 <div align="center">
-  <h3>🚀 <a href="https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app" target="_blank">사이트 바로가기</a> 🚀</h3>
-  <p><strong>모바일에서도 완벽하게 작동하는 PWA 앱</strong></p>
+  <h3>🚀 <a href="https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app" target="_blank">지금 바로 사용하기</a> 🚀</h3>
+  <p><strong>누구나 무료로 사용할 수 있는 음성 기반 건강 관리 앱</strong></p>
+  <p><em>별도 설치나 회원가입 없이 바로 사용 가능</em></p>
+
 </div>
 
 ## �� 소개
@@ -51,12 +53,19 @@
 
 ## �� 시작하기
 
-### 필요 사항
+### 🌐 온라인으로 바로 사용하기 (권장)
+**가장 간단한 방법**: 아래 링크를 클릭하여 바로 사용하세요!
+- 🚀 **[지금 바로 사용하기](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app)**
+- ✅ 별도 설치나 회원가입 불필요
+- ✅ 모든 기능 즉시 사용 가능
+- ✅ 모바일에서도 완벽 작동
+
+### 📱 필요 사항
 - 최신 웹 브라우저 (Chrome, Firefox, Safari, Edge)
-- 마이크 및 스피커 권한
+- 마이크 및 스피커 권한 (음성 기능 사용 시)
 - 인터넷 연결 (음성 인식 기능 사용 시)
 
-### 설치 및 실행
+### 💻 로컬에서 실행하기 (개발자용)
 ```bash
 # 1. 프로젝트 다운로드
 git clone https://github.com/jang8163/healthvoice.git
@@ -172,10 +181,13 @@ npm start
 
 **🚀 [지금 바로 사용해보기](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app)**
 
+### ✨ 누구나 무료로 사용 가능
 - ✅ **완전히 작동하는 PWA 앱**
 - ✅ **모바일 최적화**
 - ✅ **음성 인식 기능**
 - ✅ **오프라인 지원**
+- ✅ **별도 설치나 회원가입 불필요**
+- ✅ **GitHub에서 소스코드 공개**
 
 ## ✅ 요약
 
