@@ -24,13 +24,13 @@
   ],
   "author": "HealthVoice Team",
   "license": "MIT",
-  "homepage": "https://github.com/username/healthvoice",
+  "homepage": "https://github.com/jang8163/healthvoice",
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/healthvoice.git"
+    "url": "https://github.com/jang8163/healthvoice.git"
   },
   "bugs": {
-    "url": "https://github.com/username/healthvoice/issues"
+    "url": "https://github.com/jang8163/healthvoice/issues"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
