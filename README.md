@@ -13,7 +13,7 @@
   <p><strong>누구나 무료로 사용할 수 있는 음성 기반 건강 관리 앱</strong></p>
   <p><em>✅ 별도 설치나 회원가입 불필요 | ✅ 승인 없이 즉시 접근 가능</em></p>
   <p><strong>🔓 완전 공개 - 누구나 자유롭게 사용 가능</strong></p>
-
+  <p><strong>🌍 GitHub 공개 저장소 - 소스코드 자유롭게 확인 및 사용 가능</strong></p>
 </div>
 
 ## �� 소개
@@ -56,19 +56,13 @@
 
 ### 🌐 온라인으로 바로 사용하기 (권장)
 **가장 간단한 방법**: 아래 링크를 클릭하여 바로 사용하세요!
-<<<<<<< HEAD
-- 🚀 **[지금 바로 사용하기](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app)**
+- 🚀 **[지금 바로 사용하기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app)**
 - ✅ **승인 없이 즉시 접근 가능**
 - ✅ **별도 설치나 회원가입 불필요**
 - ✅ **모든 기능 즉시 사용 가능**
 - ✅ **모바일에서도 완벽 작동**
 - ✅ **완전 무료, 광고 없음**
-=======
-- 🚀 **[지금 바로 사용하기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app)**
-- ✅ 별도 설치나 회원가입 불필요
-- ✅ 모든 기능 즉시 사용 가능
-- ✅ 모바일에서도 완벽 작동
->>>>>>> taeseo
+- ✅ **GitHub 공개 저장소 - 누구나 자유롭게 접근 가능**
 
 ### 📱 필요 사항
 - 최신 웹 브라우저 (Chrome, Firefox, Safari, Edge)
@@ -198,8 +192,9 @@ npm start
 - ✅ **오프라인 지원**
 - ✅ **승인 없이 즉시 접근 가능**
 - ✅ **별도 설치나 회원가입 불필요**
-- ✅ **GitHub에서 소스코드 공개**
+- ✅ **GitHub 공개 저장소 - 소스코드 자유롭게 확인 및 사용 가능**
 - ✅ **완전 무료, 광고 없음**
+- ✅ **누구나 포크, 수정, 배포 가능**
 
 ## ✅ 요약
 
@@ -215,6 +210,8 @@ HealthVoice는 단순한 복약 알림을 넘어, **물·수면·혈압 관리, 
 
 - 이메일: healthvoice@example.com
 - 이슈: [GitHub Issues](https://github.com/jang8163/healthvoice/issues)
+- 저장소: [GitHub Repository](https://github.com/jang8163/healthvoice) - **공개 저장소, 누구나 자유롭게 접근 가능**
+- **라이브 데모**: [지금 바로 사용하기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app) - **승인 없이 즉시 접근 가능**
 
 ---
 
