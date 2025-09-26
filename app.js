@@ -16,6 +16,14 @@ class HealthVoice {
             mood: []
         };
         this.exerciseData = JSON.parse(localStorage.getItem('exerciseData')) || [];
+        this.voiceSettings = JSON.parse(localStorage.getItem('voiceSettings')) || {
+            tone: 'nurse',
+            speed: 0.8,
+            volume: 0.9,
+            notifications: true,
+            waterReminders: true,
+            exerciseReminders: true
+        };
         
         this.init();
     }
@@ -27,6 +35,11 @@ class HealthVoice {
         this.updateDashboard();
         this.updateCurrentTime();
         this.resetDailyData();
+        
+        // 설정 UI 로드
+        setTimeout(() => {
+            this.loadSettingsUI();
+        }, 500);
         
         // 페이지 로드 시 인사말
         setTimeout(() => {
@@ -151,6 +164,95 @@ class HealthVoice {
 
         // 응급 버튼
         document.getElementById('emergencyBtn').addEventListener('click', () => this.handleEmergency());
+
+        // 설정 관련 이벤트 리스너
+        this.initSettingsEventListeners();
+    }
+
+    // 설정 이벤트 리스너 초기화
+    initSettingsEventListeners() {
+        // 음성 톤 변경
+        document.querySelectorAll('input[name="voiceTone"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                this.changeVoiceTone(e.target.value);
+            });
+        });
+
+        // 음성 속도 변경
+        const voiceSpeedSlider = document.getElementById('voiceSpeed');
+        if (voiceSpeedSlider) {
+            voiceSpeedSlider.addEventListener('input', (e) => {
+                this.voiceSettings.speed = parseFloat(e.target.value);
+                this.saveVoiceSettings();
+            });
+        }
+
+        // 음성 볼륨 변경
+        const voiceVolumeSlider = document.getElementById('voiceVolume');
+        if (voiceVolumeSlider) {
+            voiceVolumeSlider.addEventListener('input', (e) => {
+                this.voiceSettings.volume = parseFloat(e.target.value);
+                this.saveVoiceSettings();
+            });
+        }
+
+        // 음성 테스트 버튼
+        const testVoiceBtn = document.getElementById('testVoiceBtn');
+        if (testVoiceBtn) {
+            testVoiceBtn.addEventListener('click', () => this.testVoice());
+        }
+
+        // 사용 가능한 음성 확인 버튼
+        const checkVoicesBtn = document.getElementById('checkVoicesBtn');
+        if (checkVoicesBtn) {
+            checkVoicesBtn.addEventListener('click', () => this.checkAvailableVoices());
+        }
+
+        // 알림 토글들
+        const enableNotifications = document.getElementById('enableNotifications');
+        if (enableNotifications) {
+            enableNotifications.addEventListener('change', (e) => {
+                this.voiceSettings.notifications = e.target.checked;
+                this.saveVoiceSettings();
+            });
+        }
+
+        const enableWaterReminders = document.getElementById('enableWaterReminders');
+        if (enableWaterReminders) {
+            enableWaterReminders.addEventListener('change', (e) => {
+                this.voiceSettings.waterReminders = e.target.checked;
+                this.saveVoiceSettings();
+            });
+        }
+
+        const enableExerciseReminders = document.getElementById('enableExerciseReminders');
+        if (enableExerciseReminders) {
+            enableExerciseReminders.addEventListener('change', (e) => {
+                this.voiceSettings.exerciseReminders = e.target.checked;
+                this.saveVoiceSettings();
+            });
+        }
+
+        // 데이터 관리 버튼들
+        const exportDataBtn = document.getElementById('exportDataBtn');
+        if (exportDataBtn) {
+            exportDataBtn.addEventListener('click', () => this.exportData());
+        }
+
+        const importDataBtn = document.getElementById('importDataBtn');
+        if (importDataBtn) {
+            importDataBtn.addEventListener('click', () => document.getElementById('importDataFile').click());
+        }
+
+        const importDataFile = document.getElementById('importDataFile');
+        if (importDataFile) {
+            importDataFile.addEventListener('change', (e) => this.importData(e.target.files[0]));
+        }
+
+        const resetDataBtn = document.getElementById('resetDataBtn');
+        if (resetDataBtn) {
+            resetDataBtn.addEventListener('click', () => this.resetAllData());
+        }
     }
 
     // 타이머 초기화
@@ -212,6 +314,8 @@ class HealthVoice {
             this.renderMedicationSchedule();
         } else if (sectionId === 'health') {
             this.updateHealthTabs();
+        } else if (sectionId === 'settings') {
+            this.loadSettingsUI();
         }
     }
 
@@ -311,36 +415,131 @@ class HealthVoice {
         return match ? parseInt(match[0]) : null;
     }
 
-    // TTS 음성 출력 (부드러운 여성 간호사 톤)
+    // TTS 음성 출력 (사용자 설정 톤 적용)
     speak(text) {
         if (this.synthesis) {
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'ko-KR';
             
-            // 부드러운 여성 간호사 톤 설정
-            utterance.rate = 0.8;     // 조금 더 천천히
-            utterance.pitch = 1.2;    // 조금 더 높은 음성
-            utterance.volume = 0.9;   // 부드러운 볼륨
+            // 음성 톤별 설정 적용
+            const toneSettings = this.getVoiceToneSettings(this.voiceSettings.tone);
+            utterance.rate = this.voiceSettings.speed;
+            utterance.pitch = toneSettings.pitch;
+            utterance.volume = this.voiceSettings.volume;
             
-            // 사용 가능한 한국어 여성 음성 찾기
+            // 사용 가능한 음성 찾기
             const voices = this.synthesis.getVoices();
-            const koreanFemaleVoice = voices.find(voice => 
-                voice.lang.includes('ko') && 
-                (voice.name.includes('Female') || voice.name.includes('여성') || voice.name.includes('Woman'))
-            );
+            const selectedVoice = this.findBestVoice(voices, toneSettings.voiceType);
             
-            if (koreanFemaleVoice) {
-                utterance.voice = koreanFemaleVoice;
-            } else {
-                // 한국어 음성이 있으면 사용
-                const koreanVoice = voices.find(voice => voice.lang.includes('ko'));
-                if (koreanVoice) {
-                    utterance.voice = koreanVoice;
-                }
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
             }
             
             this.synthesis.speak(utterance);
         }
+    }
+
+    // 음성 톤별 설정 반환
+    getVoiceToneSettings(tone) {
+        const toneConfigs = {
+            nurse: {
+                pitch: 1.2,
+                voiceType: 'female',
+                description: '부드럽고 친근한 간호사 톤'
+            },
+            friend: {
+                pitch: 1.4,
+                voiceType: 'female',
+                description: '활기차고 밝은 친구 톤'
+            },
+            professional: {
+                pitch: 1.0,
+                voiceType: 'neutral',
+                description: '차분하고 정중한 전문가 톤'
+            },
+            family: {
+                pitch: 1.1,
+                voiceType: 'warm',
+                description: '따뜻하고 정감있는 가족 톤'
+            },
+            doctor: {
+                pitch: 0.9,
+                voiceType: 'male',
+                description: '신뢰감 있는 의사 톤'
+            },
+            coach: {
+                pitch: 0.8,
+                voiceType: 'male',
+                description: '활기찬 코치 톤'
+            }
+        };
+        
+        return toneConfigs[tone] || toneConfigs.nurse;
+    }
+
+    // 최적의 음성 찾기
+    findBestVoice(voices, voiceType) {
+        let bestVoice = null;
+        
+        // 한국어 음성 필터링
+        const koreanVoices = voices.filter(voice => voice.lang.includes('ko'));
+        
+        if (koreanVoices.length === 0) {
+            return null;
+        }
+        
+        // 음성 타입에 따른 우선순위 설정
+        switch (voiceType) {
+            case 'female':
+                bestVoice = koreanVoices.find(voice => 
+                    voice.name.includes('Female') || 
+                    voice.name.includes('여성') || 
+                    voice.name.includes('Woman') ||
+                    voice.name.includes('여자')
+                );
+                break;
+            case 'male':
+                bestVoice = koreanVoices.find(voice => 
+                    voice.name.includes('Male') || 
+                    voice.name.includes('남성') || 
+                    voice.name.includes('Man') ||
+                    voice.name.includes('남자')
+                );
+                break;
+            case 'neutral':
+                bestVoice = koreanVoices.find(voice => 
+                    !voice.name.includes('Female') && 
+                    !voice.name.includes('Male') &&
+                    !voice.name.includes('여성') && 
+                    !voice.name.includes('남성')
+                );
+                break;
+            case 'warm':
+                // 따뜻한 음성 (여성 우선)
+                bestVoice = koreanVoices.find(voice => 
+                    voice.name.includes('Female') || 
+                    voice.name.includes('여성')
+                );
+                break;
+        }
+        
+        // 최적의 음성을 찾지 못한 경우 첫 번째 한국어 음성 사용
+        return bestVoice || koreanVoices[0];
+    }
+
+    // 사용 가능한 음성 목록 확인
+    getAvailableVoices() {
+        const voices = this.synthesis.getVoices();
+        const koreanVoices = voices.filter(voice => voice.lang.includes('ko'));
+        
+        console.log('=== 사용 가능한 한국어 음성 ===');
+        koreanVoices.forEach((voice, index) => {
+            const gender = voice.name.includes('Female') || voice.name.includes('여성') ? '여성' :
+                          voice.name.includes('Male') || voice.name.includes('남성') ? '남성' : '미상';
+            console.log(`${index + 1}: ${voice.name} (${voice.lang}) - ${gender}`);
+        });
+        
+        return koreanVoices;
     }
 
     // 음성 합성 중단
@@ -1613,6 +1812,221 @@ class HealthVoice {
 
     saveExerciseData() {
         localStorage.setItem('exerciseData', JSON.stringify(this.exerciseData));
+    }
+
+    saveVoiceSettings() {
+        localStorage.setItem('voiceSettings', JSON.stringify(this.voiceSettings));
+    }
+
+    // 음성 톤 변경
+    changeVoiceTone(tone) {
+        this.voiceSettings.tone = tone;
+        this.saveVoiceSettings();
+        
+        // UI 업데이트
+        this.updateVoiceOptionSelection(tone);
+        
+        // 변경 확인 메시지
+        const toneSettings = this.getVoiceToneSettings(tone);
+        this.showToast(`🎤 음성 톤을 "${toneSettings.description}"로 변경했습니다!`, 'success');
+    }
+
+    // 음성 옵션 선택 UI 업데이트
+    updateVoiceOptionSelection(selectedTone) {
+        document.querySelectorAll('.voice-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        const selectedOption = document.querySelector(`[data-tone="${selectedTone}"]`);
+        if (selectedOption) {
+            selectedOption.classList.add('selected');
+        }
+    }
+
+    // 음성 테스트
+    testVoice() {
+        const testMessages = {
+            nurse: '안녕하세요! 저는 건강을 도와드리는 간호사 음성입니다. 부드럽고 친근하게 안내해드릴게요.',
+            friend: '안녕! 나는 너의 건강 친구야! 밝고 활기차게 함께 건강관리 해보자!',
+            professional: '안녕하십니까. 전문적이고 정중한 톤으로 건강 관리를 도와드리겠습니다.',
+            family: '안녕하세요, 가족같이 따뜻하게 건강을 챙겨드릴게요. 언제나 곁에 있어요.',
+            doctor: '안녕하십니까. 저는 건강 관리를 전담하는 의사입니다. 신뢰할 수 있는 음성으로 안내해드리겠습니다.',
+            coach: '안녕하세요! 건강한 라이프스타일을 위한 코치입니다. 함께 활기차게 건강을 관리해봅시다!'
+        };
+        
+        const currentTone = this.voiceSettings.tone;
+        const message = testMessages[currentTone] || testMessages.nurse;
+        
+        this.speak(message);
+        this.showToast('🎵 선택하신 음성으로 테스트 중입니다!', 'info');
+    }
+
+    // 사용 가능한 음성 확인
+    checkAvailableVoices() {
+        const voices = this.getAvailableVoices();
+        
+        if (voices.length === 0) {
+            this.showToast('❌ 한국어 음성을 찾을 수 없습니다.', 'error');
+            return;
+        }
+
+        // 남성/여성 음성 개수 확인
+        const femaleVoices = voices.filter(voice => 
+            voice.name.includes('Female') || voice.name.includes('여성') || 
+            voice.name.includes('Woman') || voice.name.includes('여자')
+        );
+        
+        const maleVoices = voices.filter(voice => 
+            voice.name.includes('Male') || voice.name.includes('남성') || 
+            voice.name.includes('Man') || voice.name.includes('남자')
+        );
+
+        const neutralVoices = voices.filter(voice => 
+            !voice.name.includes('Female') && !voice.name.includes('Male') &&
+            !voice.name.includes('여성') && !voice.name.includes('남성') &&
+            !voice.name.includes('Woman') && !voice.name.includes('Man') &&
+            !voice.name.includes('여자') && !voice.name.includes('남자')
+        );
+
+        let message = `🎤 사용 가능한 한국어 음성:\n\n`;
+        message += `👩 여성 음성: ${femaleVoices.length}개\n`;
+        message += `👨 남성 음성: ${maleVoices.length}개\n`;
+        message += `⚪ 기타 음성: ${neutralVoices.length}개\n\n`;
+        
+        if (maleVoices.length === 0) {
+            message += `⚠️ 현재 시스템에서 남성 한국어 음성을 찾을 수 없습니다.\n`;
+            message += `남성 톤 선택 시 여성 음성으로 pitch를 낮춰서 재생됩니다.`;
+        } else {
+            message += `✅ 남성 음성이 사용 가능합니다!`;
+        }
+
+        alert(message);
+        console.log('상세 음성 목록은 콘솔을 확인하세요.');
+        
+        this.speak(`현재 시스템에서 여성 음성 ${femaleVoices.length}개, 남성 음성 ${maleVoices.length}개를 찾았습니다.`);
+    }
+
+    // 데이터 내보내기
+    exportData() {
+        const data = {
+            medications: this.medications,
+            healthData: this.healthData,
+            exerciseData: this.exerciseData,
+            voiceSettings: this.voiceSettings,
+            exportDate: new Date().toISOString(),
+            version: '1.0.0'
+        };
+        
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `healthvoice-backup-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        
+        URL.revokeObjectURL(url);
+        this.showToast('📁 데이터를 성공적으로 내보냈습니다!', 'success');
+        this.speak('건강 데이터를 파일로 저장했습니다.');
+    }
+
+    // 데이터 가져오기
+    importData(file) {
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                
+                if (data.medications) {
+                    this.medications = data.medications;
+                    this.saveMedications();
+                }
+                if (data.healthData) {
+                    this.healthData = data.healthData;
+                    this.saveHealthData();
+                }
+                if (data.exerciseData) {
+                    this.exerciseData = data.exerciseData;
+                    this.saveExerciseData();
+                }
+                if (data.voiceSettings) {
+                    this.voiceSettings = data.voiceSettings;
+                    this.saveVoiceSettings();
+                    this.loadSettingsUI();
+                }
+                
+                this.updateDashboard();
+                this.showToast('📁 데이터를 성공적으로 가져왔습니다!', 'success');
+                this.speak('백업된 데이터를 성공적으로 불러왔습니다.');
+                
+                // 파일 입력 초기화
+                document.getElementById('importDataFile').value = '';
+                
+            } catch (error) {
+                console.error('Import error:', error);
+                this.showToast('❌ 데이터 파일을 읽는 중 오류가 발생했습니다.', 'error');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // 모든 데이터 초기화
+    resetAllData() {
+        if (confirm('⚠️ 정말로 모든 데이터를 초기화하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.')) {
+            localStorage.removeItem('medications');
+            localStorage.removeItem('healthData');
+            localStorage.removeItem('exerciseData');
+            localStorage.removeItem('voiceSettings');
+            
+            this.showToast('🔄 모든 데이터가 초기화되었습니다.', 'info');
+            this.speak('모든 데이터가 초기화되었습니다. 페이지를 새로고침합니다.');
+            
+            // 1초 후 페이지 새로고침
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+    }
+
+    // 설정 UI 로드
+    loadSettingsUI() {
+        // 음성 톤 설정
+        const toneRadio = document.querySelector(`input[value="${this.voiceSettings.tone}"]`);
+        if (toneRadio) {
+            toneRadio.checked = true;
+            this.updateVoiceOptionSelection(this.voiceSettings.tone);
+        }
+        
+        // 음성 속도 설정
+        const speedSlider = document.getElementById('voiceSpeed');
+        if (speedSlider) {
+            speedSlider.value = this.voiceSettings.speed;
+        }
+        
+        // 음성 볼륨 설정
+        const volumeSlider = document.getElementById('voiceVolume');
+        if (volumeSlider) {
+            volumeSlider.value = this.voiceSettings.volume;
+        }
+        
+        // 알림 설정
+        const notificationCheckbox = document.getElementById('enableNotifications');
+        if (notificationCheckbox) {
+            notificationCheckbox.checked = this.voiceSettings.notifications;
+        }
+        
+        const waterCheckbox = document.getElementById('enableWaterReminders');
+        if (waterCheckbox) {
+            waterCheckbox.checked = this.voiceSettings.waterReminders;
+        }
+        
+        const exerciseCheckbox = document.getElementById('enableExerciseReminders');
+        if (exerciseCheckbox) {
+            exerciseCheckbox.checked = this.voiceSettings.exerciseReminders;
+        }
     }
     
     // 알림 권한 요청

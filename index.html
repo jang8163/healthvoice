@@ -43,6 +43,10 @@
                     <i class="fas fa-dumbbell"></i>
                     <span>운동코치</span>
                 </button>
+                <button class="nav-btn" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </button>
             </nav>
         </div>
     </header>
@@ -354,6 +358,175 @@
                         <button class="btn btn-warning" id="pauseExerciseBtn">일시정지</button>
                         <button class="btn btn-danger" id="stopExerciseBtn">종료</button>
                         <button class="btn btn-secondary" id="nextExerciseBtn">다음</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 설정 섹션 -->
+        <section id="settings" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> 설정</h2>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- 음성 설정 카드 -->
+                    <div class="card voice-settings">
+                        <div class="card-header">
+                            <h3><i class="fas fa-volume-up"></i> 음성 설정</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="setting-item">
+                                <label class="setting-label">
+                                    <i class="fas fa-microphone"></i> 음성 톤 선택
+                                </label>
+                                <div class="voice-tone-options">
+                                    <div class="voice-option" data-tone="nurse">
+                                        <input type="radio" name="voiceTone" id="voice-nurse" value="nurse" checked>
+                                        <label for="voice-nurse">
+                                            <i class="fas fa-user-nurse"></i>
+                                            <span>간호사</span>
+                                            <small>부드럽고 친근한 톤</small>
+                                        </label>
+                                    </div>
+                                    <div class="voice-option" data-tone="friend">
+                                        <input type="radio" name="voiceTone" id="voice-friend" value="friend">
+                                        <label for="voice-friend">
+                                            <i class="fas fa-smile"></i>
+                                            <span>친구</span>
+                                            <small>활기차고 밝은 톤</small>
+                                        </label>
+                                    </div>
+                                    <div class="voice-option" data-tone="professional">
+                                        <input type="radio" name="voiceTone" id="voice-professional" value="professional">
+                                        <label for="voice-professional">
+                                            <i class="fas fa-user-tie"></i>
+                                            <span>전문가</span>
+                                            <small>차분하고 정중한 톤</small>
+                                        </label>
+                                    </div>
+                                    <div class="voice-option" data-tone="family">
+                                        <input type="radio" name="voiceTone" id="voice-family" value="family">
+                                        <label for="voice-family">
+                                            <i class="fas fa-heart"></i>
+                                            <span>가족</span>
+                                            <small>따뜻하고 정감있는 톤</small>
+                                        </label>
+                                    </div>
+                                    <div class="voice-option" data-tone="doctor">
+                                        <input type="radio" name="voiceTone" id="voice-doctor" value="doctor">
+                                        <label for="voice-doctor">
+                                            <i class="fas fa-user-md"></i>
+                                            <span>의사</span>
+                                            <small>신뢰감 있는 남성 톤</small>
+                                        </label>
+                                    </div>
+                                    <div class="voice-option" data-tone="coach">
+                                        <input type="radio" name="voiceTone" id="voice-coach" value="coach">
+                                        <label for="voice-coach">
+                                            <i class="fas fa-whistle"></i>
+                                            <span>코치</span>
+                                            <small>활기찬 남성 톤</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="voice-test-buttons">
+                                    <button class="btn btn-primary test-voice-btn" id="testVoiceBtn">
+                                        <i class="fas fa-play"></i> 음성 테스트
+                                    </button>
+                                    <button class="btn btn-secondary check-voices-btn" id="checkVoicesBtn">
+                                        <i class="fas fa-list"></i> 사용 가능한 음성 확인
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label class="setting-label">
+                                    <i class="fas fa-sliders-h"></i> 음성 속도
+                                </label>
+                                <div class="voice-speed-control">
+                                    <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="0.8">
+                                    <div class="speed-labels">
+                                        <span>느림</span>
+                                        <span>보통</span>
+                                        <span>빠름</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label class="setting-label">
+                                    <i class="fas fa-volume-down"></i> 음성 볼륨
+                                </label>
+                                <div class="voice-volume-control">
+                                    <input type="range" id="voiceVolume" min="0.1" max="1" step="0.1" value="0.9">
+                                    <div class="volume-labels">
+                                        <span>조용히</span>
+                                        <span>보통</span>
+                                        <span>크게</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 알림 설정 카드 -->
+                    <div class="card notification-settings">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bell"></i> 알림 설정</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox" id="enableNotifications" checked>
+                                    <span class="toggle-slider"></span>
+                                    복약 알림 사용
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox" id="enableWaterReminders" checked>
+                                    <span class="toggle-slider"></span>
+                                    물 마시기 알림 사용
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="toggle-label">
+                                    <input type="checkbox" id="enableExerciseReminders" checked>
+                                    <span class="toggle-slider"></span>
+                                    운동 알림 사용
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 데이터 관리 카드 -->
+                    <div class="card data-management">
+                        <div class="card-header">
+                            <h3><i class="fas fa-database"></i> 데이터 관리</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="setting-item">
+                                <button class="btn btn-secondary" id="exportDataBtn">
+                                    <i class="fas fa-download"></i> 데이터 내보내기
+                                </button>
+                                <small>건강 데이터를 파일로 저장합니다</small>
+                            </div>
+                            <div class="setting-item">
+                                <input type="file" id="importDataFile" accept=".json" style="display: none;">
+                                <button class="btn btn-secondary" id="importDataBtn">
+                                    <i class="fas fa-upload"></i> 데이터 가져오기
+                                </button>
+                                <small>백업된 데이터 파일을 불러옵니다</small>
+                            </div>
+                            <div class="setting-item">
+                                <button class="btn btn-warning" id="resetDataBtn">
+                                    <i class="fas fa-refresh"></i> 데이터 초기화
+                                </button>
+                                <small>모든 데이터를 삭제하고 처음부터 시작합니다</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
