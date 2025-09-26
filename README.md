@@ -9,9 +9,10 @@
 </div>
 
 <div align="center">
-  <h3>🚀 <a href="https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app" target="_blank">지금 바로 사용하기</a> 🚀</h3>
+  <h3>🚀 <a href="https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app" target="_blank">지금 바로 사용하기</a> 🚀</h3>
   <p><strong>누구나 무료로 사용할 수 있는 음성 기반 건강 관리 앱</strong></p>
-  <p><em>별도 설치나 회원가입 없이 바로 사용 가능</em></p>
+  <p><em>✅ 별도 설치나 회원가입 불필요 | ✅ 승인 없이 즉시 접근 가능</em></p>
+  <p><strong>🔓 완전 공개 - 누구나 자유롭게 사용 가능</strong></p>
 
 </div>
 
@@ -55,10 +56,19 @@
 
 ### 🌐 온라인으로 바로 사용하기 (권장)
 **가장 간단한 방법**: 아래 링크를 클릭하여 바로 사용하세요!
+<<<<<<< HEAD
 - 🚀 **[지금 바로 사용하기](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app)**
+- ✅ **승인 없이 즉시 접근 가능**
+- ✅ **별도 설치나 회원가입 불필요**
+- ✅ **모든 기능 즉시 사용 가능**
+- ✅ **모바일에서도 완벽 작동**
+- ✅ **완전 무료, 광고 없음**
+=======
+- 🚀 **[지금 바로 사용하기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app)**
 - ✅ 별도 설치나 회원가입 불필요
 - ✅ 모든 기능 즉시 사용 가능
 - ✅ 모바일에서도 완벽 작동
+>>>>>>> taeseo
 
 ### 📱 필요 사항
 - 최신 웹 브라우저 (Chrome, Firefox, Safari, Edge)
@@ -81,7 +91,7 @@ npm start
 ```
 
 ### �� PWA 설치
-1. 모바일 브라우저에서 [HealthVoice 사이트](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app) 접속
+1. 모바일 브라우저에서 [HealthVoice 사이트](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app) 접속
 2. "홈 화면에 추가" 또는 "앱 설치" 선택
 3. 네이티브 앱처럼 사용 가능
 
@@ -179,15 +189,17 @@ npm start
 
 ## 🌐 라이브 데모
 
-**🚀 [지금 바로 사용해보기](https://healthvoice-j06w6z9ms-jangwonjuns-projects.vercel.app)**
+**🚀 [지금 바로 사용해보기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app)**
 
 ### ✨ 누구나 무료로 사용 가능
 - ✅ **완전히 작동하는 PWA 앱**
 - ✅ **모바일 최적화**
 - ✅ **음성 인식 기능**
 - ✅ **오프라인 지원**
+- ✅ **승인 없이 즉시 접근 가능**
 - ✅ **별도 설치나 회원가입 불필요**
 - ✅ **GitHub에서 소스코드 공개**
+- ✅ **완전 무료, 광고 없음**
 
 ## ✅ 요약
 

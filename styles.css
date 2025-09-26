@@ -85,6 +85,33 @@ body {
     margin-bottom: 0.25rem;
 }
 
+/* 설정 토글 버튼 */
+.settings-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    margin-left: 1rem;
+}
+
+.settings-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.settings-toggle-btn i {
+    font-size: 1.2rem;
+}
+
 /* Main Content */
 .main {
     padding-top: 100px;
@@ -1610,6 +1637,162 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* 빠른 설정 모달 */
+.quick-settings-modal {
+    max-width: 450px;
+    width: 90%;
+}
+
+.quick-setting-group {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.quick-setting-group:last-of-type {
+    border-bottom: none;
+    margin-bottom: 1rem;
+}
+
+.quick-setting-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.quick-setting-label i {
+    margin-right: 0.5rem;
+    color: #667eea;
+    width: 20px;
+}
+
+.quick-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.quick-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.quick-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #e2e8f0;
+    outline: none;
+    -webkit-appearance: none;
+    margin-bottom: 0.5rem;
+}
+
+.quick-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quick-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.speed-display, .volume-display {
+    text-align: center;
+    font-weight: 600;
+    color: #667eea;
+    font-size: 1.1rem;
+}
+
+.notification-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.quick-toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2d3748;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.quick-toggle-label:hover {
+    background: #f7fafc;
+}
+
+.quick-toggle-label input[type="checkbox"] {
+    display: none;
+}
+
+.quick-toggle-slider {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background: #cbd5e0;
+    border-radius: 10px;
+    margin-right: 1rem;
+    transition: background 0.3s ease;
+}
+
+.quick-toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quick-toggle-label input[type="checkbox"]:checked + .quick-toggle-slider {
+    background: #667eea;
+}
+
+.quick-toggle-label input[type="checkbox"]:checked + .quick-toggle-slider::before {
+    transform: translateX(20px);
+}
+
+.quick-setting-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.quick-setting-actions .btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+}
+
 /* Responsive Settings */
 @media (max-width: 768px) {
     .settings-grid {
@@ -1638,6 +1821,21 @@ body {
     }
     
     .voice-test-buttons {
+        flex-direction: column;
+    }
+    
+    .settings-toggle-btn {
+        width: 45px;
+        height: 45px;
+        margin-left: 0.5rem;
+    }
+    
+    .quick-settings-modal {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .quick-setting-actions {
         flex-direction: column;
     }
 }

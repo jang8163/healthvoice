@@ -47,6 +47,10 @@
                     <i class="fas fa-cog"></i>
                     <span>설정</span>
                 </button>
+                <!-- 설정 토글 버튼 -->
+                <button class="settings-toggle-btn" id="settingsToggleBtn" title="빠른 설정">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
             </nav>
         </div>
     </header>
@@ -601,6 +605,89 @@
                         <button type="button" class="btn btn-secondary" id="cancelMedicationBtn">취소</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 빠른 설정 모달 -->
+    <div class="modal" id="quickSettingsModal">
+        <div class="modal-content quick-settings-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-sliders-h"></i> 빠른 설정</h3>
+                <button class="close-btn" id="closeQuickSettingsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 음성 톤 선택 -->
+                <div class="quick-setting-group">
+                    <label class="quick-setting-label">
+                        <i class="fas fa-microphone"></i> 음성 톤
+                    </label>
+                    <div class="voice-tone-quick">
+                        <select id="quickVoiceTone" class="quick-select">
+                            <option value="nurse">간호사 (부드럽고 친근한 톤)</option>
+                            <option value="friend">친구 (활기차고 밝은 톤)</option>
+                            <option value="professional">전문가 (차분하고 정중한 톤)</option>
+                            <option value="family">가족 (따뜻하고 정감있는 톤)</option>
+                            <option value="doctor">의사 (신뢰감 있는 남성 톤)</option>
+                            <option value="coach">코치 (활기찬 남성 톤)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 음성 속도 -->
+                <div class="quick-setting-group">
+                    <label class="quick-setting-label">
+                        <i class="fas fa-tachometer-alt"></i> 음성 속도
+                    </label>
+                    <div class="voice-speed-quick">
+                        <input type="range" id="quickVoiceSpeed" min="0.5" max="2" step="0.1" value="0.8" class="quick-slider">
+                        <div class="speed-display">
+                            <span id="quickSpeedValue">0.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 음성 볼륨 -->
+                <div class="quick-setting-group">
+                    <label class="quick-setting-label">
+                        <i class="fas fa-volume-up"></i> 음성 볼륨
+                    </label>
+                    <div class="voice-volume-quick">
+                        <input type="range" id="quickVoiceVolume" min="0.1" max="1" step="0.1" value="0.9" class="quick-slider">
+                        <div class="volume-display">
+                            <span id="quickVolumeValue">90%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 알림 설정 -->
+                <div class="quick-setting-group">
+                    <label class="quick-setting-label">
+                        <i class="fas fa-bell"></i> 알림 설정
+                    </label>
+                    <div class="notification-toggles">
+                        <label class="quick-toggle-label">
+                            <input type="checkbox" id="quickNotifications" checked>
+                            <span class="quick-toggle-slider"></span>
+                            복약 알림
+                        </label>
+                        <label class="quick-toggle-label">
+                            <input type="checkbox" id="quickWaterReminders" checked>
+                            <span class="quick-toggle-slider"></span>
+                            물 마시기 알림
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 테스트 버튼 -->
+                <div class="quick-setting-actions">
+                    <button class="btn btn-primary" id="quickTestVoiceBtn">
+                        <i class="fas fa-play"></i> 음성 테스트
+                    </button>
+                    <button class="btn btn-secondary" id="openFullSettingsBtn">
+                        <i class="fas fa-cog"></i> 전체 설정
+                    </button>
+                </div>
             </div>
         </div>
     </div>

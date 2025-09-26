@@ -165,8 +165,88 @@ class HealthVoice {
         // 응급 버튼
         document.getElementById('emergencyBtn').addEventListener('click', () => this.handleEmergency());
 
+        // 빠른 설정 모달 관련 이벤트 리스너
+        this.initQuickSettingsEventListeners();
+
         // 설정 관련 이벤트 리스너
         this.initSettingsEventListeners();
+    }
+
+    // 빠른 설정 이벤트 리스너 초기화
+    initQuickSettingsEventListeners() {
+        // 설정 토글 버튼
+        const settingsToggleBtn = document.getElementById('settingsToggleBtn');
+        if (settingsToggleBtn) {
+            settingsToggleBtn.addEventListener('click', () => this.showQuickSettingsModal());
+        }
+
+        // 빠른 설정 모달 닫기
+        const closeQuickSettingsModal = document.getElementById('closeQuickSettingsModal');
+        if (closeQuickSettingsModal) {
+            closeQuickSettingsModal.addEventListener('click', () => this.hideQuickSettingsModal());
+        }
+
+        // 빠른 음성 톤 변경
+        const quickVoiceTone = document.getElementById('quickVoiceTone');
+        if (quickVoiceTone) {
+            quickVoiceTone.addEventListener('change', (e) => {
+                this.voiceSettings.tone = e.target.value;
+                this.saveVoiceSettings();
+                this.updateQuickSettingsUI();
+            });
+        }
+
+        // 빠른 음성 속도 변경
+        const quickVoiceSpeed = document.getElementById('quickVoiceSpeed');
+        if (quickVoiceSpeed) {
+            quickVoiceSpeed.addEventListener('input', (e) => {
+                this.voiceSettings.speed = parseFloat(e.target.value);
+                this.saveVoiceSettings();
+                document.getElementById('quickSpeedValue').textContent = e.target.value;
+            });
+        }
+
+        // 빠른 음성 볼륨 변경
+        const quickVoiceVolume = document.getElementById('quickVoiceVolume');
+        if (quickVoiceVolume) {
+            quickVoiceVolume.addEventListener('input', (e) => {
+                this.voiceSettings.volume = parseFloat(e.target.value);
+                this.saveVoiceSettings();
+                document.getElementById('quickVolumeValue').textContent = Math.round(e.target.value * 100) + '%';
+            });
+        }
+
+        // 빠른 알림 설정 변경
+        const quickNotifications = document.getElementById('quickNotifications');
+        if (quickNotifications) {
+            quickNotifications.addEventListener('change', (e) => {
+                this.voiceSettings.notifications = e.target.checked;
+                this.saveVoiceSettings();
+            });
+        }
+
+        const quickWaterReminders = document.getElementById('quickWaterReminders');
+        if (quickWaterReminders) {
+            quickWaterReminders.addEventListener('change', (e) => {
+                this.voiceSettings.waterReminders = e.target.checked;
+                this.saveVoiceSettings();
+            });
+        }
+
+        // 빠른 음성 테스트
+        const quickTestVoiceBtn = document.getElementById('quickTestVoiceBtn');
+        if (quickTestVoiceBtn) {
+            quickTestVoiceBtn.addEventListener('click', () => this.testVoice());
+        }
+
+        // 전체 설정 열기
+        const openFullSettingsBtn = document.getElementById('openFullSettingsBtn');
+        if (openFullSettingsBtn) {
+            openFullSettingsBtn.addEventListener('click', () => {
+                this.hideQuickSettingsModal();
+                this.showSection('settings');
+            });
+        }
     }
 
     // 설정 이벤트 리스너 초기화
@@ -1988,6 +2068,51 @@ class HealthVoice {
             setTimeout(() => {
                 location.reload();
             }, 1000);
+        }
+    }
+
+    // 빠른 설정 모달 표시
+    showQuickSettingsModal() {
+        this.updateQuickSettingsUI();
+        document.getElementById('quickSettingsModal').classList.add('active');
+    }
+
+    // 빠른 설정 모달 숨기기
+    hideQuickSettingsModal() {
+        document.getElementById('quickSettingsModal').classList.remove('active');
+    }
+
+    // 빠른 설정 UI 업데이트
+    updateQuickSettingsUI() {
+        // 음성 톤 설정
+        const quickVoiceTone = document.getElementById('quickVoiceTone');
+        if (quickVoiceTone) {
+            quickVoiceTone.value = this.voiceSettings.tone;
+        }
+        
+        // 음성 속도 설정
+        const quickVoiceSpeed = document.getElementById('quickVoiceSpeed');
+        if (quickVoiceSpeed) {
+            quickVoiceSpeed.value = this.voiceSettings.speed;
+            document.getElementById('quickSpeedValue').textContent = this.voiceSettings.speed;
+        }
+        
+        // 음성 볼륨 설정
+        const quickVoiceVolume = document.getElementById('quickVoiceVolume');
+        if (quickVoiceVolume) {
+            quickVoiceVolume.value = this.voiceSettings.volume;
+            document.getElementById('quickVolumeValue').textContent = Math.round(this.voiceSettings.volume * 100) + '%';
+        }
+        
+        // 알림 설정
+        const quickNotifications = document.getElementById('quickNotifications');
+        if (quickNotifications) {
+            quickNotifications.checked = this.voiceSettings.notifications;
+        }
+        
+        const quickWaterReminders = document.getElementById('quickWaterReminders');
+        if (quickWaterReminders) {
+            quickWaterReminders.checked = this.voiceSettings.waterReminders;
         }
     }
 
