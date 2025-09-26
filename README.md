@@ -9,11 +9,11 @@
 </div>
 
 <div align="center">
-  <h3>🚀 <a href="https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app" target="_blank">지금 바로 사용하기</a> 🚀</h3>
+  <h3>🚀 <a href="https://jang8163.github.io/healthvoice/" target="_blank">지금 바로 사용하기</a> 🚀</h3>
   <p><strong>누구나 무료로 사용할 수 있는 음성 기반 건강 관리 앱</strong></p>
   <p><em>✅ 별도 설치나 회원가입 불필요 | ✅ 승인 없이 즉시 접근 가능</em></p>
   <p><strong>🔓 완전 공개 - 누구나 자유롭게 사용 가능</strong></p>
-  <p><strong>🌍 GitHub 공개 저장소 - 소스코드 자유롭게 확인 및 사용 가능</strong></p>
+  <p><strong>🌐 Vercel 배포 - 안정적이고 빠른 접근</strong></p>
 </div>
 
 ## �� 소개
@@ -56,7 +56,7 @@
 
 ### 🌐 온라인으로 바로 사용하기 (권장)
 **가장 간단한 방법**: 아래 링크를 클릭하여 바로 사용하세요!
-- 🚀 **[지금 바로 사용하기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app)**
+- 🚀 **[지금 바로 사용하기](https://jang8163.github.io/healthvoice/)**
 - ✅ **승인 없이 즉시 접근 가능**
 - ✅ **별도 설치나 회원가입 불필요**
 - ✅ **모든 기능 즉시 사용 가능**
@@ -85,7 +85,7 @@ npm start
 ```
 
 ### �� PWA 설치
-1. 모바일 브라우저에서 [HealthVoice 사이트](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app) 접속
+1. 모바일 브라우저에서 [HealthVoice 사이트](https://jang8163.github.io/healthvoice/) 접속
 2. "홈 화면에 추가" 또는 "앱 설치" 선택
 3. 네이티브 앱처럼 사용 가능
 
@@ -183,7 +183,7 @@ npm start
 
 ## 🌐 라이브 데모
 
-**🚀 [지금 바로 사용해보기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app)**
+**🚀 [지금 바로 사용해보기](https://jang8163.github.io/healthvoice/)**
 
 ### ✨ 누구나 무료로 사용 가능
 - ✅ **완전히 작동하는 PWA 앱**
@@ -210,8 +210,9 @@ HealthVoice는 단순한 복약 알림을 넘어, **물·수면·혈압 관리, 
 
 - 이메일: healthvoice@example.com
 - 이슈: [GitHub Issues](https://github.com/jang8163/healthvoice/issues)
-- 저장소: [GitHub Repository](https://github.com/jang8163/healthvoice) - **공개 저장소, 누구나 자유롭게 접근 가능**
-- **라이브 데모**: [지금 바로 사용하기](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app) - **승인 없이 즉시 접근 가능**
+- **🚀 지금 바로 사용하기**: [HealthVoice 앱](https://jang8163.github.io/healthvoice/) - **완전 공개, 승인 없이 즉시 접근 가능**
+- **📁 소스코드**: [GitHub Repository](https://github.com/jang8163/healthvoice) - **공개 저장소**
+- **💡 대안**: [Vercel 배포](https://healthvoice-1ud3bjcbr-jangwonjuns-projects.vercel.app) 또는 [GitHub Pages](https://jang8163.github.io/healthvoice/) 사용
 
 ---
 
